@@ -19,7 +19,7 @@
     <MudStack Direction="Row" Spacing="2" Class="mb-4">
         <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.PieChart">View ROI</MudButton>
         <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.CompareArrows">Manage Data</MudButton>
-        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add">Add Saving</MudButton>
+        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDrawer">Add Saving</MudButton>
     </MudStack>
 
     <!-- Table -->
@@ -53,16 +53,48 @@
                     <MudIcon Icon="@context.FrequencyIcon" Class="mr-1" /> @context.Frequency
                 </MudTd>
                 <MudTd DataLabel="ACTIONS">
-                    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Default" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSaving(context)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" @onclick="() => DeleteSaving(context)" />
+                    @if (IsRecurring(context.Frequency))
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSeries(context)" />
+                    }
                 </MudTd>
             </RowTemplate>
         </MudTable>
     }
 </MudContainer>
 
+<!-- Drawer -->
+<MudDrawer Anchor="Anchor.Right" Open="@isDrawerOpen" Elevation="4" Class="mud-width-full mud-width-md" ClipMode="DrawerClipMode.Always">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">Add or Edit Saving</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" @onclick="CloseDrawer" />
+    </MudDrawerHeader>
+    <MudDrawerContent>
+        <MudForm>
+            <MudTextField Label="Date" @bind-Value="selectedSaving.SavingDate" Type="MudBlazor.InputType.Date" />
+            <MudTextField Label="Description" @bind-Value="selectedSaving.Description" />
+            <MudTextField Label="Saving Amount" @bind-Value="selectedSaving.Saving" />
+            <MudSelect T="string" Label="Status" @bind-Value="selectedSaving.Status">
+                <MudSelectItem Value="Status.Forecasted">Forecasted</MudSelectItem>
+                <MudSelectItem Value="Status.Confirmed">Confirmed</MudSelectItem>
+                <MudSelectItem Value="Status.Cancelled">Cancelled</MudSelectItem>
+            </MudSelect>
+            <MudStack Direction="Row" Spacing="2" Class="mt-4">
+                <MudButton Variant="Variant.Text" Color="Color.Default" @onclick="CloseDrawer">Cancel</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SaveSaving">Save</MudButton>
+            </MudStack>
+        </MudForm>
+    </MudDrawerContent>
+</MudDrawer>
+
 @code {
     private List<SavingItem> savings = new();
     private bool isLoading = true;
+    private bool isDrawerOpen = false;
+    private SavingItem selectedSaving = new SavingItem();
 
     protected override async Task OnInitializedAsync()
     {
@@ -83,6 +115,57 @@
         {
             isLoading = false;
         }
+    }
+
+    private void OpenDrawer()
+    {
+        selectedSaving = new SavingItem
+        {
+            SavingDate = DateTime.Now,
+            Description = string.Empty,
+            Saving = 0,
+            Status = "Forecasted"
+        };
+        isDrawerOpen = true;
+    }
+
+    private void CloseDrawer()
+    {
+        isDrawerOpen = false;
+    }
+
+    private void SaveSaving()
+    {
+        // Save logic here
+        CloseDrawer();
+    }
+
+    private bool IsRecurring(string frequency)
+    {
+        return frequency != "One-off";
+    }
+
+    private void EditSaving(SavingItem saving)
+    {
+        selectedSaving = saving;
+        isDrawerOpen = true;
+    }
+
+    private void DeleteSaving(SavingItem saving)
+    {
+        // Implement delete saving logic
+    }
+
+    private void EditSeries(SavingItem saving)
+    {
+        // Implement edit series logic
+    }
+
+    private enum Status
+    {
+        Forecasted,
+        Confirmed,
+        Cancelled
     }
 
     private class SavingItem
