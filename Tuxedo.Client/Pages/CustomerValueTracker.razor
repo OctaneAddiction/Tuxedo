@@ -1,0 +1,99 @@
+@page "/customer-value-tracker"
+@using static MudBlazor.Icons.Material
+@inject HttpClient Http
+
+<PageTitle>Customer Value Tracker</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <!-- Back Link -->
+    <MudText Typo="Typo.body1" Class="mb-2">
+        <MudLink Href="/companies" Color="Color.Primary">
+            <MudIcon Icon="@Icons.Material.Filled.ArrowBack" Class="mr-1" /> Back to all companies
+        </MudLink>
+    </MudText>
+
+    <!-- Page Title -->
+    <MudText Typo="Typo.h4" Class="mb-4">Customer Value Tracker</MudText>
+
+    <!-- Action Buttons -->
+    <MudStack Direction="Row" Spacing="2" Class="mb-4">
+        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.PieChart">View ROI</MudButton>
+        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.CompareArrows">Manage Data</MudButton>
+        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add">Add Saving</MudButton>
+    </MudStack>
+
+    <!-- Table -->
+    @if (isLoading)
+    {
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+    }
+    else
+    {
+        <MudTable Items="@savings" Bordered="true" Hover="true">
+            <HeaderContent>
+                <MudTh>SAVING DATE</MudTh>
+                <MudTh>DESCRIPTION</MudTh>
+                <MudTh>CATEGORY</MudTh>
+                <MudTh>STATUS</MudTh>
+                <MudTh>SAVING</MudTh>
+                <MudTh>FREQUENCY</MudTh>
+                <MudTh>ACTIONS</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="SAVING DATE">@context.SavingDate.ToString("dd/MM/yyyy")</MudTd>
+                <MudTd DataLabel="DESCRIPTION">@context.Description</MudTd>
+                <MudTd DataLabel="CATEGORY">
+                    <MudChip T="string" Color="Color.Default" Variant="Variant.Outlined">@context.Category</MudChip>
+                </MudTd>
+                <MudTd DataLabel="STATUS">
+                    <MudChip T="string" Color="@context.StatusColor" Variant="Variant.Filled">@context.Status</MudChip>
+                </MudTd>
+                <MudTd DataLabel="SAVING">£@context.Saving.ToString("N2")</MudTd>
+                <MudTd DataLabel="FREQUENCY">
+                    <MudIcon Icon="@context.FrequencyIcon" Class="mr-1" /> @context.Frequency
+                </MudTd>
+                <MudTd DataLabel="ACTIONS">
+                    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Default" />
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+</MudContainer>
+
+@code {
+    private List<SavingItem> savings = new();
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Call the API to fetch savings
+            var apiSavings = await Http.GetFromJsonAsync<List<SavingItem>>("api/savings");
+            if (apiSavings != null)
+            {
+                savings = apiSavings;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching savings: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private class SavingItem
+    {
+        public DateTime SavingDate { get; set; }
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public string Status { get; set; }
+        public Color StatusColor { get; set; }
+        public decimal Saving { get; set; }
+        public string Frequency { get; set; }
+        public string FrequencyIcon { get; set; }
+    }
+}
