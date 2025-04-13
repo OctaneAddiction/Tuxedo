@@ -13,15 +13,24 @@
         </MudLink>
     </MudText>
 
-    <!-- Page Title -->
-    <MudText Typo="Typo.h4" Class="mb-4">Customer Value Tracker</MudText>
+    <!-- Title and Action Buttons -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <!-- Page Title -->
+        <MudText Typo="Typo.h4">Customer Value Tracker</MudText>
 
-    <!-- Action Buttons -->
-
-        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.PieChart">View ROI</MudButton>
-        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.CompareArrows">Manage Data</MudButton>
-        <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDrawer">Add Saving</MudButton>
-
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 8px;">
+            <MudButton Color="Color.Primary" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.PieChart">
+                View ROI
+            </MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CompareArrows">
+                Manage Data
+            </MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDrawer">
+                Add Saving
+            </MudButton>
+        </div>
+    </div>
 
     <!-- Table -->
     @if (isLoading)
@@ -30,7 +39,7 @@
     }
     else
     {
-        <MudTable Items="@savings" Bordered="true" Hover="true">
+        <MudTable Items="@savings" Dense="true" Bordered="true" Hover="true">
             <HeaderContent>
                 <MudTh>SAVING DATE</MudTh>
                 <MudTh>DESCRIPTION</MudTh>
@@ -54,7 +63,7 @@
                     <MudChip T="string" Color="Color.Default" Variant="Variant.Filled">@context.Frequency</MudChip>
                 </MudTd>
                 <MudTd DataLabel="ACTIONS">
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSaving(context)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSaving(context)" Style="margin-right: 2px;" />
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" @onclick="() => DeleteSaving(context)" />
                 </MudTd>
             </RowTemplate>
