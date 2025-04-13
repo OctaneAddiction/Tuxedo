@@ -1,4 +1,5 @@
 @page "/customer-value-tracker"
+@using Tuxedo.Shared
 @using Tuxedo.Shared.Enums
 @using static MudBlazor.Icons.Material
 @inject HttpClient Http
@@ -26,7 +27,7 @@
             <MudButton Color="Color.Primary" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CompareArrows">
                 Manage Data
             </MudButton>
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDrawer">
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" @onclick="() => OpenDrawer(false)">
                 Add Saving
             </MudButton>
         </div>
@@ -58,13 +59,13 @@
                 <MudTd DataLabel="STATUS">
                     <MudChip T="string" Color="Color.Default" Variant="Variant.Filled">@context.Status</MudChip>
                 </MudTd>
-                <MudTd DataLabel="SAVING">£@context.Saving.ToString("N2")</MudTd>
+                <MudTd DataLabel="SAVING">£@context.Amount.ToString("N2")</MudTd>
                 <MudTd DataLabel="FREQUENCY">
                     <MudChip T="string" Color="Color.Default" Variant="Variant.Filled">@context.Frequency</MudChip>
                 </MudTd>
                 <MudTd DataLabel="ACTIONS">
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSaving(context)" Style="margin-right: 2px;" />
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" @onclick="() => DeleteSaving(context)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => OpenDrawer(true, context)" Style="margin-right: 2px;" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" @onclick="() => DeleteSavingAsync(context)" />
                 </MudTd>
             </RowTemplate>
         </MudTable>
@@ -74,41 +75,57 @@
 <!-- Drawer -->
 <MudDrawer Anchor="Anchor.Right" Open="@isDrawerOpen" Elevation="4" Class="mud-width-full mud-width-md" ClipMode="DrawerClipMode.Always">
     <MudDrawerHeader>
-        <MudText Typo="Typo.h6">Add or Edit Saving</MudText>
+        <MudText Typo="Typo.h6">Add New Series</MudText>
         <MudSpacer />
         <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" @onclick="CloseDrawer" />
     </MudDrawerHeader>
     <MudDrawerContent>
         <MudForm>
-            <MudTextField Label="Date" @bind-Value="selectedSaving.SavingDate" Type="MudBlazor.InputType.Date" />
-            <MudTextField Label="Description" @bind-Value="selectedSaving.Description" />
-            <MudTextField Label="Saving Amount" @bind-Value="selectedSaving.Saving" />
-            <MudSelect T="Status" Label="Status" @bind-Value="selectedSaving.Status">
+            <!-- Frequency -->
+            <MudSelect T="Frequency" Label="Frequency" @bind-Value="selectedSaving.Frequency">
+                @foreach (var frequency in Enum.GetValues<Frequency>())
+                {
+                    <MudSelectItem Value="frequency">@frequency</MudSelectItem>
+                }
+            </MudSelect>
+
+            <!-- Saving Amount -->
+            <MudTextField Label="Saving Amount" @bind-Value="selectedSaving.Amount" Type="MudBlazor.InputType.Number" />
+
+            <!-- Start Date -->
+            <MudTextField Label="Start Date" @bind-Value="selectedSaving.SavingDate" Type="MudBlazor.InputType.Date" />
+
+            <!-- Status -->
+            <MudSelect T="Status" Label="Status (Default)" @bind-Value="selectedSaving.Status">
                 @foreach (var status in Enum.GetValues<Status>())
                 {
                     <MudSelectItem Value="status">@status</MudSelectItem>
                 }
             </MudSelect>
+
+            <!-- Category -->
+            <MudTextField Label="Category" @bind-Value="selectedSaving.Category" />
+
+            <!-- Value Added -->
+            <MudTextField Label="Value Added" @bind-Value="selectedSaving.Description" Lines="3" />
+
+            <!-- Buttons -->
             <MudStack Direction="Row" Spacing="2" Class="mt-4">
                 <MudButton Variant="Variant.Text" Color="Color.Default" @onclick="CloseDrawer">Cancel</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SaveSaving">Save</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SaveSavingAsync">Save Series</MudButton>
             </MudStack>
         </MudForm>
     </MudDrawerContent>
 </MudDrawer>
 
 @code {
-    private List<SavingItem> savings = new();
+    private List<CustomerSavingPageModel> savings = new();
     private bool isLoading = true;
     private bool isDrawerOpen = false;
-    private SavingItem selectedSaving = new SavingItem();
+    private CustomerSavingPageModel selectedSaving = new CustomerSavingPageModel();
+    private bool isEditMode = false;
 
     protected override async Task OnInitializedAsync()
-    {
-        await LoadSavingsAsync();
-    }
-
-    protected override async Task OnParametersSetAsync()
     {
         await LoadSavingsAsync();
     }
@@ -118,8 +135,8 @@
         isLoading = true;
         try
         {
-            // Call the API to fetch savings
-            var apiSavings = await Http.GetFromJsonAsync<List<SavingItem>>("api/customersaving");
+            // Fetch savings from the API
+            var apiSavings = await Http.GetFromJsonAsync<List<CustomerSavingPageModel>>("api/customersaving");
             if (apiSavings != null)
             {
                 savings = apiSavings;
@@ -135,15 +152,23 @@
         }
     }
 
-    private void OpenDrawer()
+    private void OpenDrawer(bool editMode = false, CustomerSavingPageModel? saving = null)
     {
-        selectedSaving = new SavingItem
+        isEditMode = editMode;
+        if (editMode && saving != null)
         {
-            SavingDate = DateTime.Now,
-            Description = string.Empty,
-            Saving = 0,
-            Status = Status.Forecasted
-        };
+            selectedSaving = saving;
+        }
+        else
+        {
+            selectedSaving = new CustomerSavingPageModel
+            {
+                SavingDate = DateTime.Now,
+                Description = string.Empty,
+                Amount = 0,
+                Status = Status.Forecasted
+            };
+        }
         isDrawerOpen = true;
     }
 
@@ -152,40 +177,61 @@
         isDrawerOpen = false;
     }
 
-    private void SaveSaving()
+    private async Task SaveSavingAsync()
     {
-        // Save logic here
-        CloseDrawer();
+        try
+        {
+            if (isEditMode)
+            {
+                // Update existing saving
+                await Http.PutAsJsonAsync($"api/customersaving/{selectedSaving.ObjectId}", selectedSaving);
+            }
+            else
+            {
+                // Create new saving
+                var response = await Http.PostAsJsonAsync("api/customersaving", selectedSaving);
+                if (response.IsSuccessStatusCode)
+                {
+                    var createdSaving = await response.Content.ReadFromJsonAsync<CustomerSavingPageModel>();
+                    if (createdSaving != null)
+                    {
+                        savings.Add(createdSaving);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving saving: {ex.Message}");
+        }
+        finally
+        {
+            CloseDrawer();
+            await LoadSavingsAsync();
+        }
     }
 
-    private bool IsRecurring(Frequency frequency)
+    private async Task DeleteSavingAsync(CustomerSavingPageModel saving)
     {
-        return frequency != Frequency.OneOff;
+        try
+        {
+            var confirmed = await ShowConfirmationDialogAsync("Are you sure you want to delete this saving?");
+            if (confirmed)
+            {
+                await Http.DeleteAsync($"api/customersaving/{saving.ObjectId}");
+                savings.Remove(saving);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting saving: {ex.Message}");
+        }
     }
 
-    private void EditSaving(SavingItem saving)
+    private async Task<bool> ShowConfirmationDialogAsync(string message)
     {
-        selectedSaving = saving;
-        isDrawerOpen = true;
-    }
-
-    private void DeleteSaving(SavingItem saving)
-    {
-        // Implement delete saving logic
-    }
-
-    private void EditSeries(SavingItem saving)
-    {
-        // Implement edit series logic
-    }
-
-    private class SavingItem
-    {
-        public DateTime SavingDate { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public Status Status { get; set; }
-        public decimal Saving { get; set; }
-        public Frequency Frequency { get; set; }
+        // Implement a confirmation dialog (e.g., using MudBlazor DialogService)
+        // For now, return true for simplicity
+        return await Task.FromResult(true);
     }
 }
