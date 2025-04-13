@@ -6,8 +6,11 @@ namespace Tuxedo.Shared.Enums
     {
         [Description("One-off")]
         OneOff = 1,
+        [Description("Monthly")]
         Monthly = 2,
+        [Description("Quarterly")]
         Quarterly = 3,
+        [Description("Annual")]
         Annual = 4,
     }
 }

@@ -17,11 +17,11 @@
     <MudText Typo="Typo.h4" Class="mb-4">Customer Value Tracker</MudText>
 
     <!-- Action Buttons -->
-    <MudStack Direction="Row" Spacing="2" Class="mb-4">
+
         <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.PieChart">View ROI</MudButton>
         <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.CompareArrows">Manage Data</MudButton>
         <MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDrawer">Add Saving</MudButton>
-    </MudStack>
+
 
     <!-- Table -->
     @if (isLoading)
@@ -44,22 +44,18 @@
                 <MudTd DataLabel="SAVING DATE">@context.SavingDate.ToString("dd/MM/yyyy")</MudTd>
                 <MudTd DataLabel="DESCRIPTION">@context.Description</MudTd>
                 <MudTd DataLabel="CATEGORY">
-                    <MudChip T="string" Color="Color.Default" Variant="Variant.Outlined">@context.Category</MudChip>
+                    <MudChip T="string" Color="Color.Default" Variant="Variant.Filled">@context.Category</MudChip>
                 </MudTd>
                 <MudTd DataLabel="STATUS">
-                    <MudChip T="string" Color="@context.StatusColor" Variant="Variant.Filled">@context.Status</MudChip>
+                    <MudChip T="string" Color="Color.Default" Variant="Variant.Filled">@context.Status</MudChip>
                 </MudTd>
                 <MudTd DataLabel="SAVING">£@context.Saving.ToString("N2")</MudTd>
                 <MudTd DataLabel="FREQUENCY">
-                    <MudIcon Icon="@context.FrequencyIcon" Class="mr-1" /> @context.Frequency
+                    <MudChip T="string" Color="Color.Default" Variant="Variant.Filled">@context.Frequency</MudChip>
                 </MudTd>
                 <MudTd DataLabel="ACTIONS">
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSaving(context)" />
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" @onclick="() => DeleteSaving(context)" />
-                    @if (IsRecurring(context.Frequency))
-                    {
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" @onclick="() => EditSeries(context)" />
-                    }
                 </MudTd>
             </RowTemplate>
         </MudTable>
@@ -177,12 +173,10 @@
     private class SavingItem
     {
         public DateTime SavingDate { get; set; }
-        public string Description { get; set; }
-        public string Category { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
         public Status Status { get; set; }
-        public Color StatusColor { get; set; }
         public decimal Saving { get; set; }
         public Frequency Frequency { get; set; }
-        public string FrequencyIcon { get; set; }
     }
 }
