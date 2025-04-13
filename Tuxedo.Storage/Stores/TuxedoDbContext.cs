@@ -13,4 +13,11 @@ public class TuxedoDbContext : DbContext, ITuxedoDbContext
     {
         return base.SaveChangesAsync(cancellationToken);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Add configurations here if needed
+    }
 }
