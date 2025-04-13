@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuxedo.Tests", "Tuxedo.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuxedo.Domain", "Tuxedo.Domain\Tuxedo.Domain.csproj", "{EB199616-028B-412F-A0AB-3929747ED832}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuxedo.Shared", "Tuxedo.Shared\Tuxedo.Shared.csproj", "{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{EB199616-028B-412F-A0AB-3929747ED832}.Release|x64.Build.0 = Release|Any CPU
 		{EB199616-028B-412F-A0AB-3929747ED832}.Release|x86.ActiveCfg = Release|Any CPU
 		{EB199616-028B-412F-A0AB-3929747ED832}.Release|x86.Build.0 = Release|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Debug|x64.Build.0 = Debug|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Debug|x86.Build.0 = Debug|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Release|x64.ActiveCfg = Release|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Release|x64.Build.0 = Release|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Release|x86.ActiveCfg = Release|Any CPU
+		{13D05BE6-E0BE-4CE0-AB8C-C9EA70EC4631}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

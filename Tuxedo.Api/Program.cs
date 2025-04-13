@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Tuxedo.Api.Routes;
 using Tuxedo.Storage.Data;
-using Tuxedo.Api.Endpoints;
+using Tuxedo.Storage.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<TuxedoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<ITuxedoDbContext, TuxedoDbContext>();
+
+
 var app = builder.Build();
 
 // Seed the database
@@ -46,6 +50,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Use the SavingsEndpoints extension method
-app.MapSavingsEndpoints();
+app.RegisterCustomerSavingRoutes();
 
 app.Run();

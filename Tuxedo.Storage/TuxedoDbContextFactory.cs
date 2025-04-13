@@ -1,8 +1,9 @@
-using System;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Tuxedo.Storage.Stores;
 
-namespace Tuxedo.Storage.Data;
+namespace Tuxedo.Storage;
 
 public class TuxedoDbContextFactory : IDesignTimeDbContextFactory<TuxedoDbContext>
 {

@@ -1,12 +1,11 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Tuxedo.Domain.Entities;
-using Tuxedo.Storage.Data;
-using Xunit;
+using Tuxedo.Storage.Stores;
 
-namespace Tuxedo.Tests.Tests;
+namespace Tuxedo.Tests;
 
-public class SavingTests
+public class CustomerSavingTests
 {
     [Fact]
     public async Task Can_Add_Saving_To_Database()
@@ -17,22 +16,22 @@ public class SavingTests
             .Options;
 
         await using var context = new TuxedoDbContext(options);
-        var saving = new Saving
+        var saving = new CustomerSaving
         {
             SavingDate = DateTime.UtcNow,
             Description = "Test Saving",
             Category = "Billing",
-            Status = "Actual",
+            Status =  Shared.Enums.Status.Confirmed,
             Amount = 100.00m,
-            Frequency = "One off"
+            Frequency = Shared.Enums.Frequency.OneOff
         };
 
         // Act: Add the saving to the database
-        context.Savings.Add(saving);
+        context.CustomerSaving.Add(saving);
         await context.SaveChangesAsync();
 
         // Assert: Verify the saving was added
-        var savedSaving = await context.Savings.FirstOrDefaultAsync();
+        var savedSaving = await context.CustomerSaving.FirstOrDefaultAsync();
         savedSaving.Should().NotBeNull();
         savedSaving.Description.Should().Be("Test Saving");
     }
