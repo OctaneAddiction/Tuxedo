@@ -103,7 +103,7 @@
         try
         {
             // Call the API to fetch savings
-            var apiSavings = await Http.GetFromJsonAsync<List<SavingItem>>("api/savings");
+            var apiSavings = await Http.GetFromJsonAsync<List<SavingItem>>("api/customersaving");
             if (apiSavings != null)
             {
                 savings = apiSavings;

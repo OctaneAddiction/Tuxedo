@@ -11,7 +11,7 @@ using Tuxedo.Storage.Stores;
 namespace Tuxedo.Storage.Migrations
 {
     [DbContext(typeof(TuxedoDbContext))]
-    [Migration("20250413160757_InitialCreate")]
+    [Migration("20250413170942_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
