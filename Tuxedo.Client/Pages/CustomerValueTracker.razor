@@ -130,6 +130,11 @@
         await LoadSavingsAsync();
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadSavingsAsync();
+    }
+
     private async Task LoadSavingsAsync()
     {
         isLoading = true;

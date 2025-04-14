@@ -51,9 +51,20 @@ public static class CustomerSavingRoute
 
         return Results.Ok(response);
     }
-    private static async Task<IResult> UpdateCustomerSavingAsync(Guid id, CustomerSavingDto customerSavingDto, CustomerSavingService customerSavingService)
+    private static async Task<IResult> UpdateCustomerSavingAsync(Guid id, UpdateCustomerSavingRequest updateCustomerSavingRequest, CustomerSavingService customerSavingService)
     {
-        await customerSavingService.UpdateCustomerSavingAsync(id, customerSavingDto);
+        var customerSavingDto = new CustomerSavingDto
+		{
+			ObjectId = id,
+			Description = updateCustomerSavingRequest.Description,
+			Amount = updateCustomerSavingRequest.Amount,
+			Status = updateCustomerSavingRequest.Status,
+			SavingDate = updateCustomerSavingRequest.SavingDate,
+			Category = updateCustomerSavingRequest.Category,
+			Frequency = updateCustomerSavingRequest.Frequency
+		};
+
+		await customerSavingService.UpdateCustomerSavingAsync(id, customerSavingDto);
         return Results.NoContent();
     }
     private static async Task<IResult> DeleteCustomerSavingAsync(Guid id, CustomerSavingService customerSavingService)
@@ -61,9 +72,20 @@ public static class CustomerSavingRoute
         await customerSavingService.DeleteCustomerSavingAsync(id);
         return Results.NoContent();
     }
-    private static async Task<IResult> CreateCustomerSavingAsync(CustomerSavingDto customerSavingDto, CustomerSavingService customerSavingService)
+    private static async Task<IResult> CreateCustomerSavingAsync(CreateCustomerSavingRequest createCustomerSavingRequest, CustomerSavingService customerSavingService)
     {
-        await customerSavingService.CreateCustomerSavingAsync(customerSavingDto);
-        return Results.Created($"/api/customersaving/{customerSavingDto.ObjectId}", customerSavingDto);
+		var customerSavingDto = new CustomerSavingDto
+		{
+			ObjectId = createCustomerSavingRequest.ObjectId,
+			Description = createCustomerSavingRequest.Description,
+			Amount = createCustomerSavingRequest.Amount,
+			Status = createCustomerSavingRequest.Status,
+			SavingDate = createCustomerSavingRequest.SavingDate,
+			Category = createCustomerSavingRequest.Category,
+			Frequency = createCustomerSavingRequest.Frequency
+		};
+
+		await customerSavingService.CreateCustomerSavingAsync(customerSavingDto);
+        return Results.Created($"/api/customersaving/{createCustomerSavingRequest.ObjectId}", createCustomerSavingRequest);
     }
 }
