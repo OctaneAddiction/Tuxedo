@@ -50,6 +50,10 @@ app.UseCors();
 app.UseAuthorization();
 
 // Use the SavingsEndpoints extension method
+
+app.RegisterCustomerRoutes();
+
 app.RegisterCustomerSavingRoutes();
+
 
 app.Run();
