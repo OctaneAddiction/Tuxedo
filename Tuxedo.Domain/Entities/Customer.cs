@@ -6,7 +6,7 @@ namespace Tuxedo.Domain.Entities
     public class Customer
     {
         [Key]
-        public Guid CustomerId { get; set; } = Guid.NewGuid();
+        public Guid ObjectId { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = string.Empty;
 
         // Navigation property

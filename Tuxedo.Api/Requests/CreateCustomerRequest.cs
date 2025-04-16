@@ -1,4 +1,5 @@
 public class CreateCustomerRequest
 {
-    public string Name { get; set; }
+	public Guid ObjectId { get; set; } = Guid.NewGuid();
+	public string Name { get; set; }
 }

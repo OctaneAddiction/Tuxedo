@@ -9,7 +9,8 @@ namespace Tuxedo.Api.Extensions
         {
             return new Customer
             {
-                Name = request.Name
+				ObjectId = request.ObjectId,
+				Name = request.Name
             };
         }
 
@@ -23,7 +24,7 @@ namespace Tuxedo.Api.Extensions
         {
             return new GetCustomerResponse
             {
-                CustomerId = entity.CustomerId,
+                ObjectId = entity.ObjectId,
                 Name = entity.Name
             };
         }

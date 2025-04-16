@@ -11,7 +11,7 @@ using Tuxedo.Storage.Stores;
 namespace Tuxedo.Storage.Migrations
 {
     [DbContext(typeof(TuxedoDbContext))]
-    [Migration("20250416181845_InitialCreate")]
+    [Migration("20250416185254_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace Tuxedo.Storage.Migrations
 
             modelBuilder.Entity("Tuxedo.Domain.Entities.Customer", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("ObjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -31,7 +31,7 @@ namespace Tuxedo.Storage.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("ObjectId");
 
                     b.ToTable("Customer");
                 });

@@ -19,7 +19,7 @@ namespace Tuxedo.Storage.Migrations
 
             modelBuilder.Entity("Tuxedo.Domain.Entities.Customer", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid>("ObjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -28,7 +28,7 @@ namespace Tuxedo.Storage.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("ObjectId");
 
                     b.ToTable("Customer");
                 });

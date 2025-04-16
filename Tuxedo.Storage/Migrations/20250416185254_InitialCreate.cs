@@ -15,12 +15,12 @@ namespace Tuxedo.Storage.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    CustomerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ObjectId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customer", x => x.ObjectId);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,7 +43,7 @@ namespace Tuxedo.Storage.Migrations
                         name: "FK_CustomerSaving_Customer_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customer",
-                        principalColumn: "CustomerId",
+                        principalColumn: "ObjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
