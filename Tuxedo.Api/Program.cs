@@ -28,6 +28,7 @@ builder.Services.AddDbContext<TuxedoDbContext>(options =>
 
 builder.Services.AddScoped<ITuxedoDbContext, TuxedoDbContext>();
 builder.Services.AddScoped<CustomerSavingService, CustomerSavingService>();
+builder.Services.AddScoped<CustomerService, CustomerService>();
 
 var app = builder.Build();
 
