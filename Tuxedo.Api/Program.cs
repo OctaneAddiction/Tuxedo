@@ -35,7 +35,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ITuxedoDbContext>();
-    DatabaseSeeder.Seed(dbContext);
+	DatabaseSeeder.Seed(dbContext);
 }
 
 if (app.Environment.IsDevelopment())

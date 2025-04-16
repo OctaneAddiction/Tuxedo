@@ -12,4 +12,5 @@ public class GetCustomerSavingResponse
     public Status Status { get; set; }
     public decimal Amount { get; set; }
     public Frequency Frequency { get; set; }
+	public Guid CustomerId { get; set; }
 }
