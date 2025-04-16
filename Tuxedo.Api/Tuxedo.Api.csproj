@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Tuxedo.Storage\Tuxedo.Storage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>
