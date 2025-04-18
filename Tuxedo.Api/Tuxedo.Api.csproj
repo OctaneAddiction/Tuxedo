@@ -18,11 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="../Tuxedo.Shared/Tuxedo.Shared.csproj" />
+    <ProjectReference Include="..\Tuxedo.Domain\Tuxedo.Domain.csproj" />
     <ProjectReference Include="..\Tuxedo.Storage\Tuxedo.Storage.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

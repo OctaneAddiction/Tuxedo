@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Tuxedo.Api.Routes;
-using Tuxedo.Api.Services;
+using Tuxedo.Api.Admin.CustomerValueTracker.Customers.Route;
+using Tuxedo.Api.Admin.CustomerValueTracker.Customers.Service;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Route;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Service;
 using Tuxedo.Storage;
 using Tuxedo.Storage.Stores;
 

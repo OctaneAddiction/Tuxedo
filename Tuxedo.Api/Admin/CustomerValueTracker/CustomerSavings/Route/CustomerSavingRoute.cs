@@ -1,7 +1,7 @@
-using Tuxedo.Api.Services;
-using Tuxedo.Api.Responses;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Request;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Service;
 
-namespace Tuxedo.Api.Routes;
+namespace Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Route;
 
 public static class CustomerSavingRoute
 {

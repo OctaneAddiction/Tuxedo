@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Tuxedo.Api.Extensions;
-using Tuxedo.Api.Responses;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Extensions;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Request;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Response;
 using Tuxedo.Storage.Stores;
 
-namespace Tuxedo.Api.Services;
+namespace Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Service;
 
 public class CustomerSavingService
 {

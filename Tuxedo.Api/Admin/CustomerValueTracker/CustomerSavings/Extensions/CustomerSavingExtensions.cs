@@ -1,8 +1,8 @@
-using Tuxedo.Api.Responses;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Request;
+using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Response;
 using Tuxedo.Domain.Entities;
+namespace Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Extensions;
 
-namespace Tuxedo.Api.Extensions
-{
 	public static class CustomerSavingExtensions
 	{
 		public static CustomerSaving ToEntity(this CreateCustomerSavingRequest request)
@@ -47,4 +47,4 @@ namespace Tuxedo.Api.Extensions
 			};
 		}
 	}
-}
+
