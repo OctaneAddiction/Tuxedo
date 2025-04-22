@@ -22,4 +22,15 @@
     <ProjectReference Include="..\Tuxedo.Storage\Tuxedo.Storage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Admin\Company\Create\" />
+    <Folder Include="Admin\Company\Delete\" />
+    <Folder Include="Admin\Company\Get\" />
+    <Folder Include="Admin\Company\Update\" />
+    <Folder Include="Admin\ValueTracker\Create\" />
+    <Folder Include="Admin\ValueTracker\Get\" />
+    <Folder Include="Admin\ValueTracker\Delete\" />
+    <Folder Include="Admin\ValueTracker\Update\" />
+  </ItemGroup>
+
 </Project>
