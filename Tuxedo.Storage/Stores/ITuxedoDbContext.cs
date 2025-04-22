@@ -5,7 +5,7 @@ namespace Tuxedo.Storage.Stores;
 
 public interface ITuxedoDbContext
 {
-    DbSet<Customer> Customer { get; set; }
-    DbSet<CustomerSaving> CustomerSaving { get; set; }
+    DbSet<Company> Company { get; set; }
+    DbSet<CompanySaving> CompanySaving { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

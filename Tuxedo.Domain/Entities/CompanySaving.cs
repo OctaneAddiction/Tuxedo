@@ -4,10 +4,10 @@ using Tuxedo.Shared.Enums;
 
 namespace Tuxedo.Domain.Entities;
 
-public class CustomerSaving
+public class CompanySaving
 {
 	[Key]
-	public Guid ObjectId { get; set; } = Guid.NewGuid();
+	public Guid Id { get; set; } = Guid.NewGuid();
 	public DateTime SavingDate { get; set; }
 	public string Description { get; set; } = string.Empty;
 	public string Category { get; set; } = string.Empty;
@@ -16,9 +16,9 @@ public class CustomerSaving
 	public Frequency Frequency { get; set; }
 
 	// Foreign key
-	public Guid CustomerId { get; set; }
+	public Guid CompanyId { get; set; }
 
 	// Navigation property
-	[ForeignKey("CustomerId")]
-	public Customer Customer { get; set; }
+	[ForeignKey("CompanyId")]
+	public Company Company { get; set; }
 }

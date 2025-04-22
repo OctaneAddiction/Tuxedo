@@ -8,18 +8,18 @@ public static class DatabaseSeeder
 	public static void Seed(ITuxedoDbContext context)
 	{
 		// Check if data already exists
-		if (!context.Customer.Any())
+		if (!context.Company.Any())
 		{
 			// Seed initial data
-			var customer1 = new Customer { Name = "Customer 1" };
-			var customer2 = new Customer { Name = "Customer 2" };
+			var company1 = new Company { Name = "Company 1" };
+			var company2 = new Company { Name = "Company 2" };
 
-			context.Customer.AddRange(customer1, customer2);
+			context.Company.AddRange(company1, company2);
 
-			context.CustomerSaving.AddRange(new[]
+			context.CompanySaving.AddRange(new[]
 			{
-					new CustomerSaving { Description = "Initial Saving 1", Category = "Billing", Frequency = Shared.Enums.Frequency.OneOff, Status = Shared.Enums.Status.Confirmed, Amount = 100.00m, SavingDate = DateTime.UtcNow, Customer = customer1 },
-					new CustomerSaving { Description = "Initial Saving 2", Category = "Filling", Frequency = Shared.Enums.Frequency.Monthly, Status = Shared.Enums.Status.Forecasted, Amount = 200.00m, SavingDate = DateTime.UtcNow, Customer = customer2 }
+					new CompanySaving { Description = "Initial Saving 1", Category = "Billing", Frequency = Shared.Enums.Frequency.OneOff, Status = Shared.Enums.Status.Confirmed, Amount = 100.00m, SavingDate = DateTime.UtcNow, Company = company1 },
+					new CompanySaving { Description = "Initial Saving 2", Category = "Filling", Frequency = Shared.Enums.Frequency.Monthly, Status = Shared.Enums.Status.Forecasted, Amount = 200.00m, SavingDate = DateTime.UtcNow, Company = company2 }
 				});
 
 			context.SaveChangesAsync().Wait();

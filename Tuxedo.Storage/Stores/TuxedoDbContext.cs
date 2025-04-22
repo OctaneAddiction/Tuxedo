@@ -7,8 +7,8 @@ public class TuxedoDbContext : DbContext, ITuxedoDbContext
 {
 	public TuxedoDbContext(DbContextOptions<TuxedoDbContext> options) : base(options) { }
 
-	public DbSet<Customer> Customer { get; set; }
-	public DbSet<CustomerSaving> CustomerSaving { get; set; }
+	public DbSet<Company> Company { get; set; }
+	public DbSet<CompanySaving> CompanySaving { get; set; }
 
 	public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 	{
@@ -20,19 +20,19 @@ public class TuxedoDbContext : DbContext, ITuxedoDbContext
 		base.OnModelCreating(modelBuilder);
 
 		// Configure one-to-many relationship
-		modelBuilder.Entity<Customer>()
-			.HasMany(c => c.CustomerSavings)
-			.WithOne(s => s.Customer)
-			.HasForeignKey(s => s.CustomerId);
+		modelBuilder.Entity<Company>()
+			.HasMany(c => c.CompanySavings)
+			.WithOne(s => s.Company)
+			.HasForeignKey(s => s.CompanyId);
 
 		// Configure Customer entity
-		modelBuilder.Entity<Customer>(entity =>
+		modelBuilder.Entity<Company>(entity =>
 		{
 			entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
 		});
 
 		// Configure CustomerSaving entity
-		modelBuilder.Entity<CustomerSaving>(entity =>
+		modelBuilder.Entity<CompanySaving>(entity =>
 		{
 			entity.Property(e => e.Description).IsRequired().HasMaxLength(250);
 			entity.Property(e => e.Category).IsRequired().HasMaxLength(100);

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Tuxedo.Api.Admin.CustomerValueTracker.Customers.Route;
-using Tuxedo.Api.Admin.CustomerValueTracker.Customers.Service;
-using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Route;
-using Tuxedo.Api.Admin.CustomerValueTracker.CustomerSavings.Service;
+using Tuxedo.Api.Admin.CompanyValueTracker.Company.Service;
+using Tuxedo.Api.Admin.CompanyValueTracker.CompanySaving.Route;
+using Tuxedo.Api.Admin.CompanyValueTracker.CompanySaving.Service;
+using Tuxedo.Api.Admin.CustomerValueTracker.Company.Route;
 using Tuxedo.Storage;
 using Tuxedo.Storage.Stores;
 
@@ -29,8 +29,8 @@ builder.Services.AddDbContext<TuxedoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ITuxedoDbContext, TuxedoDbContext>();
-builder.Services.AddScoped<CustomerSavingService, CustomerSavingService>();
-builder.Services.AddScoped<CustomerService, CustomerService>();
+builder.Services.AddScoped<CompanySavingService, CompanySavingService>();
+builder.Services.AddScoped<CompanyService, CompanyService>();
 
 var app = builder.Build();
 
@@ -53,9 +53,9 @@ app.UseAuthorization();
 
 // Use the SavingsEndpoints extension method
 
-app.RegisterCustomerRoutes();
+app.RegisterCompanyRoutes();
 
-app.RegisterCustomerSavingRoutes();
+app.RegisterCompanySavingRoutes();
 
 
 app.Run();
