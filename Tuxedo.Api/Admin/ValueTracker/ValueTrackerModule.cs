@@ -7,16 +7,16 @@ using Tuxedo.Api.Admin.ValueTracker.Update;
 
 namespace Tuxedo.Api.Admin.ValueTracker;
 
-public class ValueTrackerModule
+public class ValueTrackerModule : AdminBaseModule
 {
 	private readonly ILogger<ValueTrackerModule> _logger;
 
-	public ValueTrackerModule(ILogger<ValueTrackerModule> logger)
+	public ValueTrackerModule(ILogger<ValueTrackerModule> logger) : base("ValueTracker")
 	{
-		_logger = logger;
+			_logger = logger;
 	}
 
-	public void RegisterRoutes(IEndpointRouteBuilder app)
+	public override void AddRoutes(IEndpointRouteBuilder app)
 	{
 		app.MapPost("/", async (ValueTrackerCreateRequest req, IValueTrackerCreateService service, CancellationToken ct) =>
 		{

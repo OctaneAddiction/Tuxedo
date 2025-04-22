@@ -7,16 +7,16 @@ using Tuxedo.Api.Admin.Company.Update;
 
 namespace Tuxedo.Api.Admin.Company;
 
-public class CompanyModule
+public class CompanyModule : AdminBaseModule
 {
 	private readonly ILogger<CompanyModule> _logger;
 
-	public CompanyModule(ILogger<CompanyModule> logger)
+	public CompanyModule(ILogger<CompanyModule> logger) : base("Company")
 	{
-		_logger = logger;
+			_logger = logger;
 	}
 
-	public void RegisterRoutes(IEndpointRouteBuilder app)
+	public override void AddRoutes(IEndpointRouteBuilder app)
 	{
 		app.MapPost("/", async (CompanyCreateRequest req, ICompanyCreateService service, CancellationToken ct) =>
 		{

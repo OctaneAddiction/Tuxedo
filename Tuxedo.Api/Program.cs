@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using Tuxedo.Api.Admin.CompanyValueTracker.Company.Service;
-using Tuxedo.Api.Admin.CompanyValueTracker.CompanySaving.Route;
-using Tuxedo.Api.Admin.CompanyValueTracker.CompanySaving.Service;
-using Tuxedo.Api.Admin.CustomerValueTracker.Company.Route;
+using Tuxedo.Api.Admin.Company.Create;
+using Tuxedo.Api.Admin.Company.Delete;
+using Tuxedo.Api.Admin.Company.Get;
+using Tuxedo.Api.Admin.Company.Update;
+using Tuxedo.Api.Admin.ValueTracker.Create;
+using Tuxedo.Api.Admin.ValueTracker.Delete;
+using Tuxedo.Api.Admin.ValueTracker.Get;
+using Tuxedo.Api.Admin.ValueTracker.Update;
 using Tuxedo.Storage;
 using Tuxedo.Storage.Stores;
 
@@ -30,8 +34,16 @@ builder.Services.AddDbContext<TuxedoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ITuxedoDbContext, TuxedoDbContext>();
-builder.Services.AddScoped<CompanySavingService, CompanySavingService>();
-builder.Services.AddScoped<CompanyService, CompanyService>();
+
+builder.Services.AddTransient<ICompanyCreateService, CompanyCreateService>();
+builder.Services.AddTransient<ICompanyUpdateService, CompanyUpdateService>();
+builder.Services.AddTransient<ICompanyDeleteService, CompanyDeleteService>();
+builder.Services.AddTransient<ICompanyGetService, CompanyGetService>();
+
+builder.Services.AddTransient<IValueTrackerCreateService, ValueTrackerCreateService>();
+builder.Services.AddTransient<IValueTrackerUpdateService, ValueTrackerUpdateService>();
+builder.Services.AddTransient<IValueTrackerDeleteService, ValueTrackerDeleteService>();
+builder.Services.AddTransient<IValueTrackerGetService, ValueTrackerGetService>();
 
 var app = builder.Build();
 
@@ -54,9 +66,6 @@ app.UseAuthorization();
 
 // Use the SavingsEndpoints extension method
 
-app.RegisterCompanyRoutes();
-
-app.RegisterCompanySavingRoutes();
 
 
 app.Run();
