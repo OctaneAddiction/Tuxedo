@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using Tuxedo.Api.Admin.CompanyValueTracker.Company.Service;
 using Tuxedo.Api.Admin.CompanyValueTracker.CompanySaving.Route;
 using Tuxedo.Api.Admin.CompanyValueTracker.CompanySaving.Service;
@@ -59,3 +60,8 @@ app.RegisterCompanySavingRoutes();
 
 
 app.Run();
+
+public static class ActivityHelper
+{
+	public static ActivitySource Source = new ActivitySource("Tuxedo");
+}
