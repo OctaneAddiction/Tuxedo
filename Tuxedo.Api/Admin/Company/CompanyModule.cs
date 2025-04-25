@@ -7,7 +7,7 @@ using Tuxedo.Api.Admin.Company.Update;
 
 namespace Tuxedo.Api.Admin.Company;
 
-public class CompanyModule : AdminBaseModule
+public class CompanyModule : BaseModule
 {
 	private readonly ILogger<CompanyModule> _logger;
 

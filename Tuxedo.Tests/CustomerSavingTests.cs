@@ -16,7 +16,7 @@ public class CustomerSavingTests
             .Options;
 
         await using var context = new TuxedoDbContext(options);
-        var saving = new CompanySaving
+        var saving = new ValueTracker
         {
             SavingDate = DateTime.UtcNow,
             Description = "Test Saving",
@@ -27,11 +27,11 @@ public class CustomerSavingTests
         };
 
         // Act: Add the saving to the database
-        context.CompanySaving.Add(saving);
+        context.ValueTracker.Add(saving);
         await context.SaveChangesAsync();
 
         // Assert: Verify the saving was added
-        var savedSaving = await context.CompanySaving.FirstOrDefaultAsync();
+        var savedSaving = await context.ValueTracker.FirstOrDefaultAsync();
         savedSaving.Should().NotBeNull();
         savedSaving.Description.Should().Be("Test Saving");
     }

@@ -7,7 +7,7 @@ using Tuxedo.Api.Admin.ValueTracker.Update;
 
 namespace Tuxedo.Api.Admin.ValueTracker;
 
-public class ValueTrackerModule : AdminBaseModule
+public class ValueTrackerModule : BaseModule
 {
 	private readonly ILogger<ValueTrackerModule> _logger;
 
@@ -103,6 +103,27 @@ public class ValueTrackerModule : AdminBaseModule
 				activity?.SetStatus(ActivityStatusCode.Error);
 
 				return Results.Problem("Error getting value tracker",
+					statusCode: StatusCodes.Status500InternalServerError);
+			}
+		});
+
+		app.MapGet("/company/{companyId:Guid}", async (Guid companyId, IValueTrackerGetService service, CancellationToken ct) =>
+		{
+			using var activity = ActivityHelper.Source.StartActivity("Get ValueTrackers By Company");
+			try
+			{
+				_logger.LogInformation("Getting value trackers for company {CompanyId}", companyId);
+				activity?.AddTag("Company.Id", companyId);
+				activity?.AddEvent(new ActivityEvent("Getting value trackers by company"));
+				var response = await service.GetByCompanyIdAsync(companyId, ct);
+				return Results.Ok(response);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error getting value trackers for company {CompanyId}", companyId);
+				activity?.RecordException(ex);
+				activity?.SetStatus(ActivityStatusCode.Error);
+				return Results.Problem("Error getting value trackers by company",
 					statusCode: StatusCodes.Status500InternalServerError);
 			}
 		});

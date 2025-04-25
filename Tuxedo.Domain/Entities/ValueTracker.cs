@@ -4,7 +4,7 @@ using Tuxedo.Shared.Enums;
 
 namespace Tuxedo.Domain.Entities;
 
-public class CompanySaving
+public class ValueTracker
 {
 	[Key]
 	public Guid Id { get; set; } = Guid.NewGuid();

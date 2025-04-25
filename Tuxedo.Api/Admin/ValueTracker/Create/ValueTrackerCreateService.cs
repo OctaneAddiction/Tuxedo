@@ -14,7 +14,7 @@ public class ValueTrackerCreateService : IValueTrackerCreateService
 
     public async Task<ValueTrackerCreateResponse> CreateAsync(ValueTrackerCreateRequest request, CancellationToken ct)
     {
-        var saving = new CompanySaving
+        var saving = new Domain.Entities.ValueTracker
         {
             Description = request.Description,
             Category = request.Category,
@@ -23,7 +23,7 @@ public class ValueTrackerCreateService : IValueTrackerCreateService
             CompanyId = request.CompanyId
         };
 
-        await _db.CompanySaving.AddAsync(saving, ct);
+        await _db.ValueTracker.AddAsync(saving, ct);
         await _db.SaveChangesAsync(ct);
 
         return new ValueTrackerCreateResponse { Id = saving.Id };

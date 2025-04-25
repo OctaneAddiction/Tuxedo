@@ -10,6 +10,6 @@ namespace Tuxedo.Domain.Entities
         public string Name { get; set; } = string.Empty;
 
         // Navigation property
-        public ICollection<CompanySaving> CompanySavings { get; set; } = new List<CompanySaving>();
+        public ICollection<ValueTracker> ValueTrackers { get; set; } = new List<ValueTracker>();
     }
 }

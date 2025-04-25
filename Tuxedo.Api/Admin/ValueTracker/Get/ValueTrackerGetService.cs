@@ -14,7 +14,7 @@ public class ValueTrackerGetService : IValueTrackerGetService
 
     public async Task<List<ValueTrackerGetResponse>> GetAllAsync(CancellationToken ct)
     {
-        return await _db.CompanySaving.Select(s => new ValueTrackerGetResponse
+        return await _db.ValueTracker.Select(s => new ValueTrackerGetResponse
         {
             Id = s.Id,
             Description = s.Description,
@@ -27,7 +27,7 @@ public class ValueTrackerGetService : IValueTrackerGetService
 
     public async Task<ValueTrackerGetResponse> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        var saving = await _db.CompanySaving.FindAsync(new object[] { id }, ct);
+        var saving = await _db.ValueTracker.FindAsync(new object[] { id }, ct);
         if (saving == null) return null;
 
         return new ValueTrackerGetResponse
@@ -43,7 +43,7 @@ public class ValueTrackerGetService : IValueTrackerGetService
 
     public async Task<List<ValueTrackerGetResponse>> GetByCompanyIdAsync(Guid companyId, CancellationToken ct)
     {
-		return await _db.CompanySaving
+		return await _db.ValueTracker
             .Where(s => s.CompanyId == companyId)
 			.Select(s => new ValueTrackerGetResponse
 		{

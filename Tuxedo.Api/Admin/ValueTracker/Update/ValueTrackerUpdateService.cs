@@ -13,7 +13,7 @@ public class ValueTrackerUpdateService : IValueTrackerUpdateService
 
     public async Task<ValueTrackerUpdateResponse> UpdateAsync(ValueTrackerUpdateRequest request, CancellationToken ct)
     {
-        var saving = await _db.CompanySaving.FindAsync(new object[] { request.Id }, ct);
+        var saving = await _db.ValueTracker.FindAsync(new object[] { request.Id }, ct);
         if (saving == null) throw new KeyNotFoundException("Saving not found");
 
         saving.Description = request.Description;

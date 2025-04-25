@@ -8,7 +8,7 @@ public class TuxedoDbContext : DbContext, ITuxedoDbContext
 	public TuxedoDbContext(DbContextOptions<TuxedoDbContext> options) : base(options) { }
 
 	public DbSet<Company> Company { get; set; }
-	public DbSet<CompanySaving> CompanySaving { get; set; }
+	public DbSet<ValueTracker> ValueTracker { get; set; }
 
 	public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 	{
@@ -21,7 +21,7 @@ public class TuxedoDbContext : DbContext, ITuxedoDbContext
 
 		// Configure one-to-many relationship
 		modelBuilder.Entity<Company>()
-			.HasMany(c => c.CompanySavings)
+			.HasMany(c => c.ValueTrackers)
 			.WithOne(s => s.Company)
 			.HasForeignKey(s => s.CompanyId);
 
@@ -32,7 +32,7 @@ public class TuxedoDbContext : DbContext, ITuxedoDbContext
 		});
 
 		// Configure CustomerSaving entity
-		modelBuilder.Entity<CompanySaving>(entity =>
+		modelBuilder.Entity<ValueTracker>(entity =>
 		{
 			entity.Property(e => e.Description).IsRequired().HasMaxLength(250);
 			entity.Property(e => e.Category).IsRequired().HasMaxLength(100);
