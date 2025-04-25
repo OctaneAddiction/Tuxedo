@@ -16,10 +16,12 @@ public class ValueTrackerCreateService : IValueTrackerCreateService
     {
         var saving = new Domain.Entities.ValueTracker
         {
+            Frequency = request.Frequency,
             Description = request.Description,
             Category = request.Category,
             Amount = request.Amount,
             SavingDate = request.SavingDate,
+            Status = request.Status,
             CompanyId = request.CompanyId
         };
 

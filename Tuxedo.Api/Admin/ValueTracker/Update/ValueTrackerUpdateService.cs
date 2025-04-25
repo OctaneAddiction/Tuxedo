@@ -20,6 +20,8 @@ public class ValueTrackerUpdateService : IValueTrackerUpdateService
         saving.Category = request.Category;
         saving.Amount = request.Amount;
         saving.SavingDate = request.SavingDate;
+        saving.Status = request.Status;
+        saving.Frequency = request.Frequency;
 
         await _db.SaveChangesAsync(ct);
 
