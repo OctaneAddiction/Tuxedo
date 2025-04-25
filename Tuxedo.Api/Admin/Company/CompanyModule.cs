@@ -11,7 +11,7 @@ public class CompanyModule : AdminBaseModule
 {
 	private readonly ILogger<CompanyModule> _logger;
 
-	public CompanyModule(ILogger<CompanyModule> logger) : base("Company")
+	public CompanyModule(ILogger<CompanyModule> logger) : base("company")
 	{
 			_logger = logger;
 	}

@@ -40,4 +40,20 @@ public class ValueTrackerGetService : IValueTrackerGetService
             CompanyId = saving.CompanyId
         };
     }
+
+    public async Task<List<ValueTrackerGetResponse>> GetByCompanyIdAsync(Guid companyId, CancellationToken ct)
+    {
+		return await _db.CompanySaving
+            .Where(s => s.CompanyId == companyId)
+			.Select(s => new ValueTrackerGetResponse
+		{
+			Id = s.Id,
+			Description = s.Description,
+			Category = s.Category,
+			Amount = s.Amount,
+			SavingDate = s.SavingDate,
+			CompanyId = s.CompanyId
+		}).ToListAsync(ct);
+	}
+
 }

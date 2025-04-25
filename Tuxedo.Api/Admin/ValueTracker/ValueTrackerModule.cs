@@ -11,7 +11,7 @@ public class ValueTrackerModule : AdminBaseModule
 {
 	private readonly ILogger<ValueTrackerModule> _logger;
 
-	public ValueTrackerModule(ILogger<ValueTrackerModule> logger) : base("ValueTracker")
+	public ValueTrackerModule(ILogger<ValueTrackerModule> logger) : base("valuetracker")
 	{
 			_logger = logger;
 	}
