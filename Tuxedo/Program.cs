@@ -1,11 +1,5 @@
-using MudBlazor.Services;
-using Tuxedo.Client.Pages;
-using Tuxedo.Components;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add MudBlazor services
-builder.Services.AddMudServices();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5070/") });
 
@@ -34,9 +28,5 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Tuxedo.Client._Imports).Assembly);
 
 app.Run();

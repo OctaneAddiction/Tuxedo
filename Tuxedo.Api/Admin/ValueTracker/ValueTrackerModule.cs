@@ -40,6 +40,28 @@ public class ValueTrackerModule : BaseModule
 			}
 		});
 
+		app.MapPost("/series", async (ValueTrackerCreateSeriesRequest req, IValueTrackerCreateService service, CancellationToken ct) =>
+		{
+			using var activity = ActivityHelper.Source.StartActivity("Create ValueTracker Series");
+			try
+			{
+				_logger.LogInformation("Creating value tracker series: {Request}", req);
+				activity?.AddEvent(new ActivityEvent("Creating value tracker series"));
+
+				var response = await service.CreateSeriesAsync(req, ct);
+				return Results.Created($"/admin/valuetracker/{response.SeriesId}", response);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error creating value tracker series");
+				activity?.RecordException(ex);
+				activity?.SetStatus(ActivityStatusCode.Error);
+
+				return Results.Problem("Error creating value tracker series",
+					statusCode: StatusCodes.Status500InternalServerError);
+			}
+		});
+
 		app.MapPut("/", async (ValueTrackerUpdateRequest req, IValueTrackerUpdateService service, CancellationToken ct) =>
 		{
 			using var activity = ActivityHelper.Source.StartActivity("Update ValueTracker");

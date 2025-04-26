@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tuxedo.Storage\Tuxedo.Storage.csproj" />
+    <ProjectReference Include="..\Tuxedo.Api\Tuxedo.Api.csproj" />
   </ItemGroup>
 
 </Project>

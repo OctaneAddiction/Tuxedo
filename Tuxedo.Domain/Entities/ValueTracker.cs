@@ -15,6 +15,8 @@ public class ValueTracker
 	public decimal Amount { get; set; }
 	public Frequency Frequency { get; set; }
 
+	public Guid SeriesId { get; set; } = Guid.NewGuid();
+
 	// Foreign key
 	public Guid CompanyId { get; set; }
 
