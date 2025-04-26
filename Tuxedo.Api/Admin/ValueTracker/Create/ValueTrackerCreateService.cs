@@ -47,7 +47,7 @@ public class ValueTrackerCreateService : IValueTrackerCreateService
         }
 
         // Generate records based on the frequency
-        while (currentDate <= endDate)
+        while (currentDate <= endDate) // Change from <= to < to avoid including the endDate itself
         {
             savingSeries.Add(new Domain.Entities.ValueTracker
             {

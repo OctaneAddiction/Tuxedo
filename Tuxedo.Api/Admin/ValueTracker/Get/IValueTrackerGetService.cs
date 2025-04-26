@@ -4,5 +4,5 @@ public interface IValueTrackerGetService
 {
     Task<List<ValueTrackerGetResponse>> GetAllAsync(CancellationToken ct);
     Task<ValueTrackerGetResponse> GetByIdAsync(Guid id, CancellationToken ct);
-	Task<List<ValueTrackerGetResponse>> GetByCompanyIdAsync(Guid companyId, CancellationToken ct);
+	Task<List<ValueTrackerGetByCompanyResponse>> GetByCompanyIdAsync(Guid companyId, CancellationToken ct);
 }

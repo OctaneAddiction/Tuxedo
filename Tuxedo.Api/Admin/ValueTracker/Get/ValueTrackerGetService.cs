@@ -45,9 +45,11 @@ public class ValueTrackerGetService : IValueTrackerGetService
 		};
 	}
 
-	public async Task<List<ValueTrackerGetResponse>> GetByCompanyIdAsync(Guid companyId, CancellationToken ct)
+	public async Task<List<ValueTrackerGetByCompanyResponse>> GetByCompanyIdAsync(Guid companyId, CancellationToken ct)
 	{
-		return await _db.ValueTracker
+		var response = new List<ValueTrackerGetByCompanyResponse>();
+
+        var valueTrackers = await _db.ValueTracker
 			.Where(s => s.CompanyId == companyId)
 			.Select(s => new ValueTrackerGetResponse
 			{
@@ -59,7 +61,20 @@ public class ValueTrackerGetService : IValueTrackerGetService
 				Frequency = s.Frequency,
 				Status = s.Status,
 				CompanyId = s.CompanyId
-			}).ToListAsync(ct);
-	}
+			}).ToListAsync(ct);	
 
+		var totalEstimatedAmountSaved = valueTrackers.Where(x => x.Status == Shared.Enums.Status.Forecasted).Sum(s => s.Amount);
+		var totalActualAmountSpent = valueTrackers.Where(x => x.Status == Shared.Enums.Status.Confirmed).Sum(s => s.Amount);
+		var totalCount = valueTrackers.Count;
+		
+		response.Add(new ValueTrackerGetByCompanyResponse
+		{
+			ValueTrackers = valueTrackers,
+			TotalEstimatedAmountSaved = totalEstimatedAmountSaved,
+			TotalActualAmountSpent = totalActualAmountSpent,
+			TotalCount = totalCount
+		});
+
+		return response;
+	}
 }
