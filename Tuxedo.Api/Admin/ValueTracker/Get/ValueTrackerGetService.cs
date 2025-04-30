@@ -63,15 +63,12 @@ public class ValueTrackerGetService : IValueTrackerGetService
 				CompanyId = s.CompanyId
 			}).ToListAsync(ct);	
 
-		var totalEstimatedAmountSaved = valueTrackers.Where(x => x.Status == Shared.Enums.Status.Forecasted).Sum(s => s.Amount);
-		var totalActualAmountSpent = valueTrackers.Where(x => x.Status == Shared.Enums.Status.Confirmed).Sum(s => s.Amount);
+
 		var totalCount = valueTrackers.Count;
 		
 		response.Add(new ValueTrackerGetByCompanyResponse
 		{
 			ValueTrackers = valueTrackers,
-			TotalEstimatedAmountSaved = totalEstimatedAmountSaved,
-			TotalActualAmountSpent = totalActualAmountSpent,
 			TotalCount = totalCount
 		});
 

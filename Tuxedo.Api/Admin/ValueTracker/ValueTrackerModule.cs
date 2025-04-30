@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Tuxedo.Api.Admin.ValueTracker.Create;
 using Tuxedo.Api.Admin.ValueTracker.Delete;
 using Tuxedo.Api.Admin.ValueTracker.Get;
+using Tuxedo.Api.Admin.ValueTracker.Report;
 using Tuxedo.Api.Admin.ValueTracker.Update;
 
 namespace Tuxedo.Api.Admin.ValueTracker;
@@ -169,6 +170,27 @@ public class ValueTrackerModule : BaseModule
 				activity?.SetStatus(ActivityStatusCode.Error);
 
 				return Results.Problem("Error deleting value tracker",
+					statusCode: StatusCodes.Status500InternalServerError);
+			}
+		});
+
+		app.MapGet("/report/company/{companyId:Guid}", async (Guid companyId, IValueTrackerReportService service, CancellationToken ct) =>
+		{
+			using var activity = ActivityHelper.Source.StartActivity("Generate ValueTracker Report");
+			try
+			{
+				_logger.LogInformation("Generating value tracker report for company {CompanyId}", companyId);
+				activity?.AddTag("Company.Id", companyId);
+				activity?.AddEvent(new ActivityEvent("Generating value tracker report"));
+				var response = await service.GenerateReportByCompanyIdAsync(companyId, ct);
+				return Results.Ok(response);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error generating value tracker report for company {CompanyId}", companyId);
+				activity?.RecordException(ex);
+				activity?.SetStatus(ActivityStatusCode.Error);
+				return Results.Problem("Error generating value tracker report",
 					statusCode: StatusCodes.Status500InternalServerError);
 			}
 		});

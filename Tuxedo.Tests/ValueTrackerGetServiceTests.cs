@@ -60,8 +60,6 @@ public class ValueTrackerGetServiceTests
         result.Should().HaveCount(1);
         var companyResponse = result.First();
         companyResponse.ValueTrackers.Should().HaveCount(2);
-        companyResponse.TotalEstimatedAmountSaved.Should().Be(1000m);
-        companyResponse.TotalActualAmountSpent.Should().Be(2000m);
         companyResponse.TotalCount.Should().Be(2);
     }
 }

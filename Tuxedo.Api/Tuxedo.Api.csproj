@@ -18,7 +18,6 @@
     <Folder Include="Admin\Company\Get\" />
     <Folder Include="Admin\Company\Update\" />
     <Folder Include="Admin\ValueTracker\Create\" />
-    <Folder Include="Admin\ValueTracker\Get\" />
     <Folder Include="Admin\ValueTracker\Delete\" />
     <Folder Include="Admin\ValueTracker\Update\" />
   </ItemGroup>

@@ -8,6 +8,7 @@ using Tuxedo.Api.Admin.Company.Update;
 using Tuxedo.Api.Admin.ValueTracker.Create;
 using Tuxedo.Api.Admin.ValueTracker.Delete;
 using Tuxedo.Api.Admin.ValueTracker.Get;
+using Tuxedo.Api.Admin.ValueTracker.Report;
 using Tuxedo.Api.Admin.ValueTracker.Update;
 using Tuxedo.Storage;
 using Tuxedo.Storage.Stores;
@@ -45,6 +46,7 @@ builder.Services.AddTransient<IValueTrackerCreateService, ValueTrackerCreateServ
 builder.Services.AddTransient<IValueTrackerUpdateService, ValueTrackerUpdateService>();
 builder.Services.AddTransient<IValueTrackerDeleteService, ValueTrackerDeleteService>();
 builder.Services.AddTransient<IValueTrackerGetService, ValueTrackerGetService>();
+builder.Services.AddTransient<IValueTrackerReportService, ValueTrackerReportService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
